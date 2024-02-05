@@ -1,0 +1,3 @@
+color-primary: #243342, 
+color-secondary: #535659,
+color-bg: #858789
