@@ -31,7 +31,7 @@ class AuthController extends Controller
             }elseif ($user->role == 'kasir') {
                 return redirect()->route('home-kasir')->with('msg', 'Selamat Datang di Home', $user->nama);
             }elseif ($user->role == 'admin') {
-                return redirect()->route('dash-kasir')->with('msg', 'Selamat Datang di dashboard', $user->nama);
+                return redirect()->route('dash-admin')->with('msg', 'Selamat Datang di dashboard', $user->nama);
             }else{
                 return redirect()->route('home-owner')->with('msg', 'Selamat Datang di Home', $user->nama);
             }

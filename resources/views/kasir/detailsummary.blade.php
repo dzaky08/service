@@ -8,6 +8,9 @@
         <div id="print-container" class="card col-6 mx-auto shadow p-4">
             <div class="row">
                 <div class="mx-auto pb-2">
+                    <p class="card-text">Tanggal : {{ $data[0]->created_at->format('Y-m-d') }} </p>
+                </div>
+                <div class="mx-auto pb-2">
                     <p class="card-text">Nama : {{ $data[0]->nama }} </p>
                 </div>
                 <div class="mx-auto pb-2">
@@ -22,7 +25,7 @@
                 <hr>
                 <h5 class="card-title">Service yang dilakukan :</h5>
                 @foreach ($data as $item)
-                    <p class="card-text">{{ $loop->iteration }} . {{ $item->service->nama }} : {{ $item->service->harga }}
+                    <p class="card-text">{{ $loop->iteration }} . {{ $item->service->nama }} : {{ $item->service->harga * $item->qty + $item->service->harga_jasa}}
                     </p>
                 @endforeach
                 <hr>

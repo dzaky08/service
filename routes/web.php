@@ -34,6 +34,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/detail-kasir/{no_kendaraan}', [KasirController::class,'detailkasir'])->name('detail-kasir');
         Route::post('/lunas/{no_kendaraan}', [KasirController::class,'lunas'])->name('lunas');
         Route::get('/summary', [KasirController::class,'summary'])->name('summary');
+        Route::get('/transaksi/filter', [KasirController::class, 'filter'])->name('transaksi.filter');
         Route::get('/detailsum/{no_kendaraan}', [KasirController::class,'detailsummary'])->name('detail-summary');
+    });
+    
+    Route::prefix('admin')->group(function () {
+        Route::get('/dash-admin', [AdminController::class,'dash'])->name('dash-admin');
     });
 });
