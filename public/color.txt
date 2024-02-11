@@ -1,3 +1,4 @@
-color-primary: #243342, 
-color-secondary: #535659,
-color-bg: #858789
+mist: #90AFC5, 
+stone: #336B87,
+shadow: #2A3132,
+autumn-foliage: #763626

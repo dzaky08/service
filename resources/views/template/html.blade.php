@@ -11,7 +11,7 @@
         /* Default styles for the document */
         body {
             font-size: 14px;
-            /* background-color: #535659; */
+            background-color: #90AFC5;
         }
 
         /* Styles specific for printing */

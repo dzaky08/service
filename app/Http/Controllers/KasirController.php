@@ -56,7 +56,6 @@ class KasirController extends Controller
                 'uang_bayar' => $request->uang_bayar,
                 'uang_kembali' => $request->uang_kembali,
                 'status' => 'lunas',
-                'created_at' => now(),
             ]);
         }
 
@@ -96,7 +95,7 @@ class KasirController extends Controller
         $end_date = Carbon::parse($request->input('end_date'))->endOfDay();
 
         // Menyaring transaksi berdasarkan rentang tanggal yang dipilih
-        $transaksis = Transaksi::whereBetween('created_at', [$start_date, $end_date])
+        $transaksis = Transaksi::whereBetween('updated', [$start_date, $end_date])
                            ->where('status', 'lunas')
                            ->with('service')
                            ->get();

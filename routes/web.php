@@ -40,5 +40,18 @@ Route::middleware(['auth'])->group(function () {
     
     Route::prefix('admin')->group(function () {
         Route::get('/dash-admin', [AdminController::class,'dash'])->name('dash-admin');
+        Route::get('/log-admin', [AdminController::class,'log'])->name('log-admin');
+        Route::get('/tambah', [AdminController::class,'tambah'])->name('tambah');
+        Route::post('/post-tambah', [AdminController::class,'postTambah'])->name('post-tambah');
+        Route::delete('/hapus/{service}', [AdminController::class,'hapus'])->name('hapus');
+        Route::get('/ubah/{service}', [AdminController::class,'ubah'])->name('ubah');
+        Route::post('/post-ubah/{service}', [AdminController::class,'postUbah'])->name('post-ubah');
+        Route::get('/log/filter', [AdminController::class, 'filterlog'])->name('log-filter');
+    });
+    
+    Route::prefix('owner')->group(function () {
+        Route::get('/home-owner', [OwnerController::class,'home'])->name('home-owner');
+        Route::get('/filterowner', [OwnerController::class,'filterowner'])->name('filterowner');
+        Route::get('/log/filter', [AdminController::class, 'filterlog'])->name('filter-log');
     });
 });
