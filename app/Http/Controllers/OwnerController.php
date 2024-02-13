@@ -51,6 +51,8 @@ class OwnerController extends Controller
         $tanggal = [];
         $pemasukan = [];
     
+        $transaksis = $transaksis->sortBy('updated_at');
+
         foreach ($transaksis as $transaksi) {
             $tanggal[] = Carbon::parse($transaksi->updated_at)->format('d-m-Y');
     

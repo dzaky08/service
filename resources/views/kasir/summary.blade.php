@@ -43,7 +43,7 @@
                             <td>{{ $firstTransaction->created_at->format('Y-m-d') }}</td>
                             <td>
                                 <a href="{{ route('detail-summary', ['no_kendaraan' => $firstTransaction->no_kendaraan]) }}"
-                                    class="btn btn-primary form-control">detail</a>
+                                    class="btn text-white form-control" style="background-color: #336B87">detail</a>
                             </td>
                         </tr>
                     @endforeach

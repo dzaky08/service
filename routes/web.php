@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/detail/{service}', [MontirController::class,'detail'])->name('detail');
         Route::get('/keranjang', [MontirController::class,'keranjang'])->name('keranjang');
         Route::post('/post-pesan', [MontirController::class,'postPesan'])->name('post-pesan');
-        Route::get('/hapus', [MontirController::class,'hapus'])->name('hapus');
+        Route::get('/hapus', [MontirController::class,'hapus'])->name('hapus-keranjang');
     });
     Route::prefix('kasir')->group(function () {
         Route::get('/home-kasir', [KasirController::class,'home'])->name('home-kasir');
@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/summary', [KasirController::class,'summary'])->name('summary');
         Route::get('/transaksi/filter', [KasirController::class, 'filter'])->name('transaksi.filter');
         Route::get('/detailsum/{no_kendaraan}', [KasirController::class,'detailsummary'])->name('detail-summary');
+        Route::get('/pdf/{no_kendaraan}', [KasirController::class,'pdf'])->name('pdf');
     });
     
     Route::prefix('admin')->group(function () {
@@ -43,15 +44,22 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/log-admin', [AdminController::class,'log'])->name('log-admin');
         Route::get('/tambah', [AdminController::class,'tambah'])->name('tambah');
         Route::post('/post-tambah', [AdminController::class,'postTambah'])->name('post-tambah');
-        Route::delete('/hapus/{service}', [AdminController::class,'hapus'])->name('hapus');
+        Route::delete('/delete/{service}', [AdminController::class,'hapus'])->name('hapus-admin');
         Route::get('/ubah/{service}', [AdminController::class,'ubah'])->name('ubah');
         Route::post('/post-ubah/{service}', [AdminController::class,'postUbah'])->name('post-ubah');
+        Route::get('/dash-user', [AdminController::class,'user'])->name('dash-user');
+        Route::get('/tambah-user', [AdminController::class,'tambahuser'])->name('tambah-user');
+        Route::post('/post-user', [AdminController::class,'posttambahuser'])->name('post-user');
+        Route::delete('/delete/{user}', [AdminController::class,'hapususer'])->name('hapus-user');
+        Route::get('/edit/{user}', [AdminController::class,'ubahuser'])->name('edit');
+        Route::post('/post-edit/{user}', [AdminController::class,'postubahuser'])->name('edit-user');
         Route::get('/log/filter', [AdminController::class, 'filterlog'])->name('log-filter');
     });
     
     Route::prefix('owner')->group(function () {
         Route::get('/home-owner', [OwnerController::class,'home'])->name('home-owner');
         Route::get('/filterowner', [OwnerController::class,'filterowner'])->name('filterowner');
+        Route::get('/logowner', [OwnerController::class,'logowner'])->name('logowner');
         Route::get('/log/filter', [AdminController::class, 'filterlog'])->name('filter-log');
     });
 });

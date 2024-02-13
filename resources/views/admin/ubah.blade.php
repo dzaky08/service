@@ -8,7 +8,7 @@
                 <h2>Ubah Service</h2>
             </div>
             <div class="card-body">
-                <form action="{{route('post-ubah', $service->id)}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('ubahuser', $service->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group mb-3">
                         <label for="">Foto</label>

@@ -117,7 +117,17 @@ class KasirController extends Controller
         return view('kasir.summary', compact('groupedTransactions', 'pemasukan'));
     }   
     
-    function pdf() {
-        
+    public function pdf($no_kendaraan) {
+        // Mendapatkan satu transaksi dengan nomor kendaraan yang sama dan status 'lunas'
+        $transaksi = Transaksi::where('no_kendaraan', $no_kendaraan)->where('status', 'lunas')->get();
+        $invoice = $transaksi->first()->kode; // Mengambil kode dari transaksi pertama
+    
+        // Sekarang Anda dapat menggunakan $transaksi untuk membuat file PDF
+        $data = [
+            'data' => $transaksi
+        ];
+    
+        $pdf = PDF::loadView('kasir.pdf-summary', $data);
+        return $pdf->download($invoice . '.pdf'); // Menggunakan $invoice untuk menamai file PDF
     }
 }

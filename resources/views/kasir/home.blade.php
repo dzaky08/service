@@ -24,7 +24,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $no_kendaraan }}</td>
                             <td><a href="{{route('detail-kasir', ['no_kendaraan' => $no_kendaraan])}}"
-                                    class="btn btn-primary form-control">detail</a></td>
+                                    class="btn text-white form-control" style="background-color: #336B87">detail</a></td>
                         </tr>
                     @endforeach
                 </tbody>

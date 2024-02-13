@@ -15,7 +15,7 @@
                 <div class="row">
                     <input type="date" class="form-control w-25 m-2" name="start_date">
                     <input type="date" class="form-control w-25 m-2" name="end_date">
-                    <button class="btn btn-success w-25 m-2" type="submit">Filter</button>
+                    <button class="btn btn-success w-25 m-2 ms-5" type="submit">Filter</button>
                 </div>
             </form>
             <table id="example" class="table table-secondary table-bordered">
@@ -41,5 +41,5 @@
             </table>
         </div>
     </div>
-
+    
 @endsection

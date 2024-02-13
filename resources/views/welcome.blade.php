@@ -21,7 +21,7 @@
                     @endif
                 </div>
                 <div class="mb-3">
-                    <button class="btn btn-primary form-control">Login</button>
+                    <button class="btn form-control text-white" style="background-color: #336B87">Login</button>
                 </div>
             </form>
         </div>

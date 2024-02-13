@@ -44,7 +44,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary form-control ">Pilih</button>
+                                    <button class="btn text-white form-control" style="background-color: #336B87">Pilih</button>
                                 </td>
                             </form>
                         </tr>

@@ -4,6 +4,7 @@
             <a href="{{route('dash-admin')}}" class="nav nav-link text-white">Home</a>
             {{-- <a href="{{}}" class="nav nav-link text-white">Summary</a> --}}
             <a href="{{route('log-admin')}}" class="nav nav-link text-white">Log</a>
+            <a href="{{route('dash-user')}}" class="nav nav-link text-white">User</a>
         @elseif (auth()->user()->role == 'montir')
             <a href="{{ route('home-montir') }}" class="nav navbar nav-link text-white">Home</a>
             <a href="{{ route('keranjang') }}" class="nav nav-link text-white">Keranjang</a>
@@ -11,8 +12,8 @@
             <a href="{{ route('home-kasir') }}" class="nav nav-link text-white">Home</a>
             <a href="{{route('summary')}}" class="nav nav-link text-white">Summary</a>
         @else
-            <a href="" class="nav nav-link text-white">Home</a>
-            <a href="" class="nav nav-link text-white">Log</a>
+            <a href="{{route('home-owner')}}" class="nav nav-link text-white">Home</a>
+            <a href="{{route('logowner')}}" class="nav nav-link text-white">Log</a>
         @endif
         <form class="btn-outline d-flex" role="search" method="GET" action="{{ route('logout') }}">
             @csrf

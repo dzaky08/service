@@ -22,10 +22,10 @@
                         <label for="To">To</label>
                         <input type="date" name="end_date" class="form-control w-75" required>
                     </div>
-                    <button class="btn btn-primary">Filter</button>
-                    @if (Session::has('msg'))
+                    <button class="btn mt-3 text-white form-control" style="background-color: #336B87">Filter</button>
+                    {{-- @if (Session::has('msg'))
                         <span class="alert alert-danger">{{ Session::get('msg') }}</span>
-                    @endif
+                    @endif --}}
                 </form>
             </div>
         </div>

@@ -42,13 +42,9 @@
                     <label for="">{{ number_format($data[0]->uang_kembali, '2',',','.') }}</label>
                 </div>
 
-                <button id="no-print" onclick="printInvoice()" class="btn btn-primary">Print</button>
+                <a href="{{route('pdf', ['no_kendaraan' => $data[0]->no_kendaraan])}}" class="btn form-control text-white" style="background-color: #336B87">Print</a>
+                {{-- <button id="no-print" onclick="printInvoice()" class="btn btn-primary">Print</button> --}}
             </div>
         </div>
     </div>
-    <script>
-        function printInvoice() {
-            window.print();
-        }
-    </script>
 @endsection
