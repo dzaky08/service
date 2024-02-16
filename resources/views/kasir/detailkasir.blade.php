@@ -19,7 +19,7 @@
                 <hr>
                 <h5 class="card-title">Service yang dipilih :</h5>
                 @foreach ($data as $item)
-                    <p class="card-text">{{ $loop->iteration }} . {{ $item->service->nama }} : {{ $item->service->harga * $item->qty + $item->service->harga_jasa }}
+                    <p class="card-text">{{ $loop->iteration }} . {{ $item->service->nama }} : {{ number_format($item->service->harga * $item->qty + $item->service->harga_jasa, '0',',','.') }}
                     </p>
                 @endforeach
                 <hr>

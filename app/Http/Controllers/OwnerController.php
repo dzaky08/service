@@ -93,5 +93,66 @@ class OwnerController extends Controller
         $logs = Log::all();
 
         return view('owner.log', compact('logs'));
+    }
+    public function summary()
+    {
+        $transaksi = Transaksi::where('status', 'lunas')->with('service')->get();
+        $pemasukan = $transaksi->sum(function ($transaksi) {
+            return $transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa;
+        });
+    
+        // Filter transactions with the same 'no_kendaraan' and 'created_at'
+        $filteredTransactions = $transaksi->unique(function ($item) {
+            return $item->no_kendaraan . $item->created_at;
+        });
+    
+        // Group transactions by 'no_kendaraan'
+        $groupBy = $filteredTransactions->groupBy('no_kendaraan');
+    
+        return view('owner.report', compact('groupBy', 'pemasukan'));
+    }
+    public function filter(Request $request)
+    {
+        // Mendapatkan tanggal awal dan akhir dari request
+        $start_date = Carbon::parse($request->input('start_date'))->startOfDay();
+        $end_date = Carbon::parse($request->input('end_date'))->endOfDay();
+
+        // Menyaring transaksi berdasarkan rentang tanggal yang dipilih
+        $transaksis = Transaksi::whereBetween('updated_at', [$start_date, $end_date])
+                           ->where('status', 'lunas')
+                           ->with('service')
+                           ->get();
+
+        // Menghitung total pemasukan dari transaksi yang telah disaring
+        $pemasukan = $transaksis->sum(function ($transaksi) {
+             return $transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa;
+        });
+
+    // Menyaring transaksi dengan 'no_kendaraan' dan 'created_at' yang sama
+        $filteredTransactions = $transaksis->unique(function ($item) {
+            return $item->no_kendaraan . $item->created_at;
+        });
+
+    // Mengelompokkan transaksi berdasarkan 'no_kendaraan'
+        $groupBy = $filteredTransactions->groupBy('no_kendaraan');
+
+    // Mengirimkan data ke view 'transaksi' bersama dengan total pemasukan
+        return view('owner.report', compact('groupBy', 'pemasukan'));
     } 
+    function pdfsum(){
+        $transaksi = Transaksi::where('status', 'lunas')->with('service')->get();
+        $pemasukan = $transaksi->sum(function ($transaksi) {
+            return $transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa;
+        });
+    
+        // Filter transactions with the same 'no_kendaraan' and 'created_at'
+        $filteredTransactions = $transaksi->unique(function ($item) {
+            return $item->no_kendaraan . $item->created_at;
+        });
+    
+        // Group transactions by 'no_kendaraan'
+        $groupedTransactions = $filteredTransactions->groupBy('no_kendaraan');
+    
+        return view('kasir.summary', compact('groupedTransactions', 'pemasukan'));
+    }
 }

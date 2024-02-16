@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/transaksi/filter', [KasirController::class, 'filter'])->name('transaksi.filter');
         Route::get('/detailsum/{no_kendaraan}', [KasirController::class,'detailsummary'])->name('detail-summary');
         Route::get('/pdf/{no_kendaraan}', [KasirController::class,'pdf'])->name('pdf');
+        Route::get('/pdf-sum', [KasirController::class,'pdfsum'])->name('pdf-sum');
     });
     
     Route::prefix('admin')->group(function () {
@@ -60,6 +61,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/home-owner', [OwnerController::class,'home'])->name('home-owner');
         Route::get('/filterowner', [OwnerController::class,'filterowner'])->name('filterowner');
         Route::get('/logowner', [OwnerController::class,'logowner'])->name('logowner');
-        Route::get('/log/filter', [AdminController::class, 'filterlog'])->name('filter-log');
+        Route::get('/log/filter', [OwnerController::class, 'filterlog'])->name('filter-log');
+        Route::get('/sum-owner', [OwnerController::class,'summary'])->name('sum-owner');
+        Route::get('/report/filter', [OwnerController::class, 'filter'])->name('report-filter');
     });
 });

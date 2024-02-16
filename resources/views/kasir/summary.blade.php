@@ -15,7 +15,16 @@
                 <div class="row">
                     <input type="date" class="form-control w-25 m-2" name="start_date">
                     <input type="date" class="form-control w-25 m-2" name="end_date">
-                    <button class="btn btn-success  w-25 m-2" type="submit">Filter</button>
+                    <button class="btn btn-success w-25 m-2" type="submit">Filter</button>
+                </div>
+            </form>
+            <p></p>
+            <form action="{{ route('pdf-sum') }}" method="GET">
+                @csrf
+                <div class="row">
+                    <input type="date" class="form-control w-25 m-2" name="start_date">
+                    <input type="date" class="form-control w-25 m-2" name="end_date">
+                    <button class="btn w-25 m-2 text-white" style="background-color: #336B87">Print</button>
                 </div>
             </form>
             <table id="example" class="table table-secondary table-bordered">
@@ -31,7 +40,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($groupedTransactions as $noKendaraan => $group)
+                    @foreach ($groupBy as $noKendaraan => $group)
                         @php
                             $firstTransaction = $group->first(); // Get the first transaction in the group
                         @endphp

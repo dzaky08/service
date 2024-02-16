@@ -1,8 +1,9 @@
 @extends('template.html')
 @section('title', 'home owner')
 @section('body')
-@include('template.nav')
-
+{{-- @include('template.nav') --}}
+@include('template.sidebar')
+<div id="content">
     <div class="container mt-5">
         <div class="mt-3">
             <h4>Total Pemasukan {{ number_format($totalpemasukan, 2, ',','.') }}</h4>
@@ -30,6 +31,8 @@
             </div>
         </div>
     </div>
+
     <script src="{{ $chart->cdn() }}"></script>
     {{ $chart->script() }}
+</div>
 @endsection

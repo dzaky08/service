@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>pdf</title>
+
+    <style>
+        body{
+            background-image: url('img/montir6.jpg');
+            /* Atur ukuran background image */
+            background-size: 10%;
+            /* Atur posisi background image */
+            background-position: center;
+            /* Atur pengulangan background image */
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 
 <body>

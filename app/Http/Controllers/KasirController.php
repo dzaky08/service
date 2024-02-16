@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Mpdf\Mpdf;
 
 class KasirController extends Controller
 {
@@ -84,9 +85,9 @@ class KasirController extends Controller
         });
     
         // Group transactions by 'no_kendaraan'
-        $groupedTransactions = $filteredTransactions->groupBy('no_kendaraan');
+        $groupBy = $filteredTransactions->groupBy('no_kendaraan');
     
-        return view('kasir.summary', compact('groupedTransactions', 'pemasukan'));
+        return view('kasir.summary', compact('groupBy', 'pemasukan'));
     }
     public function filter(Request $request)
     {
@@ -95,7 +96,7 @@ class KasirController extends Controller
         $end_date = Carbon::parse($request->input('end_date'))->endOfDay();
 
         // Menyaring transaksi berdasarkan rentang tanggal yang dipilih
-        $transaksis = Transaksi::whereBetween('updated', [$start_date, $end_date])
+        $transaksis = Transaksi::whereBetween('updated_at', [$start_date, $end_date])
                            ->where('status', 'lunas')
                            ->with('service')
                            ->get();
@@ -111,23 +112,81 @@ class KasirController extends Controller
         });
 
     // Mengelompokkan transaksi berdasarkan 'no_kendaraan'
-        $groupedTransactions = $filteredTransactions->groupBy('no_kendaraan');
+        $groupBy = $filteredTransactions->groupBy('no_kendaraan');
 
     // Mengirimkan data ke view 'transaksi' bersama dengan total pemasukan
-        return view('kasir.summary', compact('groupedTransactions', 'pemasukan'));
+        return view('kasir.summary', compact('groupBy', 'pemasukan'));
     }   
     
     public function pdf($no_kendaraan) {
-        // Mendapatkan satu transaksi dengan nomor kendaraan yang sama dan status 'lunas'
+        
         $transaksi = Transaksi::where('no_kendaraan', $no_kendaraan)->where('status', 'lunas')->get();
         $invoice = $transaksi->first()->kode; // Mengambil kode dari transaksi pertama
-    
+
         // Sekarang Anda dapat menggunakan $transaksi untuk membuat file PDF
         $data = [
             'data' => $transaksi
         ];
+
+        $view = view('kasir.pdf-summary', $data)->render();
+
+        // Membuat objek mpdf
+        $mpdf = new Mpdf();
+
+        // Menambahkan konten PDF dari view yang dirender
+        $mpdf->WriteHTML($view);
+
+        // Menghasilkan PDF dengan nama file yang sesuai dengan invoice
+        $mpdf->Output($invoice . '.pdf', 'D');
+        
+        // // Mendapatkan satu transaksi dengan nomor kendaraan yang sama dan status 'lunas'
+        // $transaksi = Transaksi::where('no_kendaraan', $no_kendaraan)->where('status', 'lunas')->get();
+        // $invoice = $transaksi->first()->kode; // Mengambil kode dari transaksi pertama
     
-        $pdf = PDF::loadView('kasir.pdf-summary', $data);
-        return $pdf->download($invoice . '.pdf'); // Menggunakan $invoice untuk menamai file PDF
+        // // Sekarang Anda dapat menggunakan $transaksi untuk membuat file PDF
+        // $data = [
+        //     'data' => $transaksi
+        // ];
+    
+        // $pdf = PDF::loadView('kasir.pdf-summary', $data);
+        // return $pdf->download($invoice . '.pdf'); // Menggunakan $invoice untuk menamai file PDF
+    }
+
+    function pdfsum(Request $request){
+        $start_date = Carbon::parse($request->input('start_date'))->startOfDay();
+        $end_date = Carbon::parse($request->input('end_date'))->endOfDay();
+
+        $transaksi = Transaksi::where('status', 'lunas')
+                    ->with('service')
+                    ->whereBetween('updated_at', [$start_date, $end_date])
+                    ->get();
+
+        // $pemasukan = $transaksi->sum(function ($transaksi) {
+        //     return $transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa;
+        // });
+    
+        // Filter transactions with the same 'no_kendaraan' and 'created_at'
+        $filteredTransactions = $transaksi->unique(function ($item) {
+            return $item->no_kendaraan . $item->updated_at;
+        });
+    
+        // Group transactions by 'no_kendaraan'
+        $groupBy = $filteredTransactions->groupBy('no_kendaraan');
+
+        $data = [
+            'data' => $groupBy
+        ];
+
+        $view = view('kasir.pdf-report', $data)->render();
+
+        // Membuat objek mpdf
+        $mpdf = new Mpdf();
+
+        // Menambahkan konten PDF dari view yang dirender
+        $mpdf->WriteHTML($view);
+
+        $filename = 'report' . now()->format('d-m-Y_H-i-s'). '.pdf';
+        // Menghasilkan PDF dengan nama file yang sesuai dengan invoice
+        $mpdf->Output($filename, 'D');
     }
 }

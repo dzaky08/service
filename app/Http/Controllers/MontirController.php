@@ -17,8 +17,8 @@ class MontirController extends Controller
     }
 
     function detail(Request $request,Service $service) {
-        if ($service->status === 'habis') {
-            return back()->with('msg', 'Service tidak tersedia.');
+        if ($service->status === 'habis' || $service->qty < 1) {
+            return back()->with('msg', 'Stock tidak tersedia.');
         }
     
         // Validate the input quantity

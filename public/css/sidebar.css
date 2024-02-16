@@ -1,4 +1,59 @@
-.sidebar-offcanvas{
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #2A3132;
+    padding: 20px;
+}
+
+.sidebar ul.components {
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar ul li {
+    padding: 10px 0;
+}
+
+.sidebar ul li a {
+    color: #fff;
+}
+.sidebar .nav-link {
+    position: relative;
+}
+
+.sidebar .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px; /* Atur tinggi garis bawah sesuai keinginan Anda */
+    background-color: #007bff; /* Atur warna garis bawah sesuai keinginan Anda */
+    transform: scaleX(0); /* Awalnya skala 0 sehingga tidak terlihat */
+    transition: transform 0.3s ease; /* Animasi saat mouse hover */
+}
+
+.sidebar .nav-link:hover::after {
+    transform: scaleX(1); /* Memperluas garis bawah saat mouse hover */
+}
+.sidebar .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px; /* Atur tinggi garis bawah sesuai keinginan Anda */
+    background-color: #007bff; /* Atur warna garis bawah sesuai keinginan Anda */
+}
+
+#content {
+    margin-left: 250px; /* Adjust this value to match the width of the sidebar */
+    padding: 20px;
+}
+/* .sidebar-offcanvas{
             height: 100vh;
             position: fixed;
             border: 1px;
@@ -19,4 +74,4 @@ body{
 .footer{
     margin-top: auto;
     margin-top: 25vh;
-}
+} */

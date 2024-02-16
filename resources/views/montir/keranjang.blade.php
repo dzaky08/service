@@ -2,7 +2,8 @@
 
 @section('title', 'keranjang')
 @section('body')
-    @include('template.nav')
+    @include('template.sidebar')
+    <div id="content">
         <div class="container mt-5">
             @if (Session::has('msg'))
                 <div class="alert alert-primary">{{ Session::get('msg') }}</div>
@@ -50,11 +51,12 @@
                                     </td>
                                     <td>{{ $item->service->nama }}</td>
                                     <td>{{ number_format($item->service->harga, 0, ',', '.') }}</td>
-                                    <td>{{ ($item->qty) }}</td>
-                                    <td>{{ ($item->service->harga_jasa) }}</td>
+                                    <td>{{ $item->qty }}</td>
+                                    <td>{{ $item->service->harga_jasa }}</td>
                                     <td>{{ number_format($item->total_harga, 0, ',', '.') }}</td>
                                     <td>
-                                        <a href="{{ route('hapus-keranjang', ['id' => $item->id]) }}" class="btn btn-danger">Hapus</a>
+                                        <a href="{{ route('hapus-keranjang', ['id' => $item->id]) }}"
+                                            class="btn btn-danger">Hapus</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -68,14 +70,17 @@
                     </div>
                     <div class="row">
                         <div class="col-4 mt-3" style="margin-left: 65%">
-                            <button type="submit" class="btn text-white form-control" style="background-color: #336B87">Pesan</button>
+                            <button type="submit" class="btn text-white form-control"
+                                style="background-color: #336B87">Pesan</button>
 
                         </div>
                     </div>
 
 
-                </div>
-            </form>
+                </form>
+            </div>
+        </div>
+
 
 
         <script>
