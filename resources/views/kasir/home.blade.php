@@ -3,32 +3,42 @@
 @section('title', 'Home Kasir')
 
 @section('body')
-    @include('template.nav')
-    <div class="container mt-5">
-        @if (Session::has('msg'))
-            <div class="alert alert-primary">{{ Session::get('msg') }}</div>
-        @endif
-        <div class="card col-8 mx-auto p-4">
-            <h5 class="text-center">Booking Service</h5>
-            <table id="example" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>No Kendaraan</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($data as $no_kendaraan => $group)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $no_kendaraan }}</td>
-                            <td><a href="{{route('detail-kasir', ['no_kendaraan' => $no_kendaraan])}}"
-                                    class="btn text-white form-control" style="background-color: #336B87">detail</a></td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    @include('template.sidebar')
+    <div id="content">
+        <div class="container mt-5">
+            @if (Session::has('msg'))
+                <div class="alert alert-primary">{{ Session::get('msg') }}</div>
+            @endif
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <a href="{{ route('dipesan') }}" class="card text-white bg-warning" style="text-decoration: none;">
+                        <div class="card-body">
+                            <h5 class="card-title">Transaksi Dipesan</h5>
+                            @if ($jmlhdipesan->isEmpty())
+                            <p>Jumlah Transaksi Dipesan: 0</p>
+                        @else
+                            @foreach ($jmlhdipesan as $transaksi)
+                                <p>Jumlah Transaksi Dipesan: {{ $transaksi->jumlah }}</p>
+                            @endforeach
+                        @endif
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{{ route('summary') }}" class="card text-white bg-success" style="text-decoration: none;">
+                        <div class="card-body">
+                            <h5 class="card-title">Transaksi lunas</h5>
+                            @if ($jmlhlunas->isEmpty())
+                                <p>Jumlah Transaksi Lunas: 0</p>
+                            @else
+                                @foreach ($jmlhlunas as $transaksi)
+                                    <p>Jumlah Transaksi Lunas: {{ $transaksi->jumlah }}</p>
+                                @endforeach
+                            @endif
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

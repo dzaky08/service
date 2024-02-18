@@ -10,24 +10,12 @@
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <style>
-        /* Default styles for the document */
         body {
-            font-size: 14px;
-            background-color: #90AFC5;
-        }
-
-        /* Styles specific for printing */
-        @media print {
-
-            /* Hide elements you don't want to print */
-            #no-print {
-                display: none;
-            }
-
-            /* Additional print styles for specific containers or elements */
-            #print-container {
-                /* Define styles for the container you want to print */
-            }
+                background-repeat: no-repeat;
+                background-size: cover;
+                font-size: 14px;
+                /* background-image: url('{{ asset('img/bgdark.jpg') }}'); */
+                background-color: #7D8792;
         }
     </style>
 </head>

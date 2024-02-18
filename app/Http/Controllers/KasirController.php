@@ -13,9 +13,30 @@ use Mpdf\Mpdf;
 class KasirController extends Controller
 {
     function home(){
+        // Dapatkan data transaksi yang dipesan
+        $dipesan = Transaksi::where('status', 'dipesan')->get();
+
+        // Dapatkan jumlah transaksi yang dipesan berdasarkan grup no_kendaraan
+        $jmlhdipesan = Transaksi::where('status', 'dipesan')
+            ->groupBy('no_kendaraan')
+            ->selectRaw('no_kendaraan, count(*) as jumlah')
+            ->get();
+
+        // Dapatkan data transaksi yang lunas
+        $lunas = Transaksi::where('status', 'lunas')->get();
+
+        // Dapatkan jumlah transaksi yang lunas berdasarkan grup no_kendaraan
+        $jmlhlunas = Transaksi::where('status', 'lunas')
+            ->groupBy('no_kendaraan')
+            ->selectRaw('no_kendaraan, count(*) as jumlah')
+            ->get();
+
+        return view('kasir.home', compact('dipesan', 'jmlhdipesan', 'lunas', 'jmlhlunas'));
+    }
+    function dipesan(){
         $transaksi = Transaksi::where('status', 'dipesan')->get();
         $data = $transaksi->groupBy('no_kendaraan');
-        return view('kasir.home', compact('data'));
+        return view('kasir.dipesan', compact('data'));
     }
     
     function detailkasir($no_kendaraan){
@@ -123,33 +144,19 @@ class KasirController extends Controller
         $transaksi = Transaksi::where('no_kendaraan', $no_kendaraan)->where('status', 'lunas')->get();
         $invoice = $transaksi->first()->kode; // Mengambil kode dari transaksi pertama
 
-        // Sekarang Anda dapat menggunakan $transaksi untuk membuat file PDF
-        $data = [
-            'data' => $transaksi
-        ];
-
-        $view = view('kasir.pdf-summary', $data)->render();
-
-        // Membuat objek mpdf
-        $mpdf = new Mpdf();
-
-        // Menambahkan konten PDF dari view yang dirender
-        $mpdf->WriteHTML($view);
-
-        // Menghasilkan PDF dengan nama file yang sesuai dengan invoice
-        $mpdf->Output($invoice . '.pdf', 'D');
+        
         
         // // Mendapatkan satu transaksi dengan nomor kendaraan yang sama dan status 'lunas'
         // $transaksi = Transaksi::where('no_kendaraan', $no_kendaraan)->where('status', 'lunas')->get();
         // $invoice = $transaksi->first()->kode; // Mengambil kode dari transaksi pertama
     
         // // Sekarang Anda dapat menggunakan $transaksi untuk membuat file PDF
-        // $data = [
-        //     'data' => $transaksi
-        // ];
+        $data = [
+            'data' => $transaksi
+        ];
     
-        // $pdf = PDF::loadView('kasir.pdf-summary', $data);
-        // return $pdf->download($invoice . '.pdf'); // Menggunakan $invoice untuk menamai file PDF
+        $pdf = PDF::loadView('kasir.pdf-summary', $data);
+        return $pdf->download($invoice . '.pdf'); // Menggunakan $invoice untuk menamai file PDF
     }
 
     function pdfsum(Request $request){
@@ -161,9 +168,9 @@ class KasirController extends Controller
                     ->whereBetween('updated_at', [$start_date, $end_date])
                     ->get();
 
-        // $pemasukan = $transaksi->sum(function ($transaksi) {
-        //     return $transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa;
-        // });
+        $pemasukan = $transaksi->sum(function ($transaksi) {
+            return $transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa;
+        });
     
         // Filter transactions with the same 'no_kendaraan' and 'created_at'
         $filteredTransactions = $transaksi->unique(function ($item) {
@@ -174,19 +181,11 @@ class KasirController extends Controller
         $groupBy = $filteredTransactions->groupBy('no_kendaraan');
 
         $data = [
-            'data' => $groupBy
+            'data' => $groupBy,
+            'pemasukan' => $pemasukan
         ];
-
-        $view = view('kasir.pdf-report', $data)->render();
-
-        // Membuat objek mpdf
-        $mpdf = new Mpdf();
-
-        // Menambahkan konten PDF dari view yang dirender
-        $mpdf->WriteHTML($view);
-
-        $filename = 'report' . now()->format('d-m-Y_H-i-s'). '.pdf';
-        // Menghasilkan PDF dengan nama file yang sesuai dengan invoice
-        $mpdf->Output($filename, 'D');
+    
+        $pdf = PDF::loadView('kasir.pdf-report', $data);
+        return $pdf->download(now() . '.pdf'); // Menggunakan $invoice untuk menamai file PDF
     }
 }

@@ -15,6 +15,7 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kategori_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('nama');
             $table->integer('qty');
             $table->integer('harga');

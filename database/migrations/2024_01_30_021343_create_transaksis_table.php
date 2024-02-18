@@ -15,8 +15,8 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('service_id')->constrained();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('service_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('nama')->nullable();
             $table->string('kode')->nullable();
             $table->string('no_telp')->nullable();

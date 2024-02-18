@@ -5,15 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Kategori extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-
-    function transaksi() {
-        return $this->hasMany(Transaksi::class);
-    }
-    function kategori() {
-        return $this->belongsTo(Kategori::class);
+    function service() {
+        return $this->hasMany(Service::class);
     }
 }

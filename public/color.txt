@@ -1,4 +1,4 @@
-mist: #90AFC5, 
-stone: #336B87,
-shadow: #2A3132,
-autumn-foliage: #763626
+bg: #7D8792, 
+sidebar: #3D4452,
+btn: #00ADB5,
+card: #EEEEEE

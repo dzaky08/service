@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Models\Service;
@@ -12,8 +13,14 @@ use Illuminate\Support\Facades\Redis;
 class MontirController extends Controller
 {
     function home() {
-        $servis = Service::all();
-        return view('montir.homemontir', compact('servis'));
+        $data = Kategori::all();
+        return view('montir.homemontir', compact('data'));
+    }
+
+    function service($id) {
+        $data = Service::where('kategori_id', $id)->with('kategori')->get();
+
+        return view('montir.transaksi', compact('data'));
     }
 
     function detail(Request $request,Service $service) {
@@ -35,6 +42,7 @@ class MontirController extends Controller
             'status' => 'keranjang',
             'qty' => $quantity,
         ]);
+        
     
         return back()->with('msg', 'Berhasil diinput ke keranjang.');
     }

@@ -24,13 +24,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class,'logout'])->name('logout');
     Route::prefix('montir')->group(function () {
         Route::get('/home-montir', [MontirController::class,'home'])->name('home-montir');
-        Route::post('/detail/{service}', [MontirController::class,'detail'])->name('detail');
+        Route::get('/detailservice/{id}', [MontirController::class,'service'])->name('detailservice');
+        Route::post('/pilih/{service}', [MontirController::class,'detail'])->name('pilih');
         Route::get('/keranjang', [MontirController::class,'keranjang'])->name('keranjang');
         Route::post('/post-pesan', [MontirController::class,'postPesan'])->name('post-pesan');
         Route::get('/hapus', [MontirController::class,'hapus'])->name('hapus-keranjang');
     });
     Route::prefix('kasir')->group(function () {
         Route::get('/home-kasir', [KasirController::class,'home'])->name('home-kasir');
+        Route::get('/dipesan', [KasirController::class,'dipesan'])->name('dipesan');
         Route::get('/detail-kasir/{no_kendaraan}', [KasirController::class,'detailkasir'])->name('detail-kasir');
         Route::post('/lunas/{no_kendaraan}', [KasirController::class,'lunas'])->name('lunas');
         Route::get('/summary', [KasirController::class,'summary'])->name('summary');

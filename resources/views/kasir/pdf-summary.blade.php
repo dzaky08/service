@@ -8,10 +8,10 @@
     <title>pdf</title>
 
     <style>
-        body{
-            background-image: url('img/montir6.jpg');
+        #print-container{
+            background-image: url('img/logo1.jpg');
             /* Atur ukuran background image */
-            background-size: 10%;
+            background-size: 40%;
             /* Atur posisi background image */
             background-position: center;
             /* Atur pengulangan background image */
