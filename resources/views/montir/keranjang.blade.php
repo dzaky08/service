@@ -82,9 +82,6 @@
                 </div>
         </div>
     </div>
-
-
-
     <script>
         new DataTable('#example');
     </script>

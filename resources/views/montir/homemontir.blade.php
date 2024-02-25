@@ -18,8 +18,8 @@
                                     height="150px" width="100px" style="background-color: #EEEEEE;">
                             </div>
                             <div class="card-body">
-                                <button
-                                    class="btn text-white w-100 text-center" style="background-color: #00ADB5">{{ strtoupper($item->nama) }}</button>
+                                <button class="btn text-white w-100 text-center"
+                                    style="background-color: #00ADB5">{{ strtoupper($item->nama) }}</button>
                             </div>
                         </a>
                     </div>
@@ -27,7 +27,4 @@
             </div>
         </div>
     </div>
-
-    </div>
-
 @endsection

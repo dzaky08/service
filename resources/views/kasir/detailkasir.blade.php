@@ -52,7 +52,7 @@
                                 <input type="number" name="uang_bayar" placeholder="Masukkan Uang Tunai.."
                                     oninput="pengurangan()" class="form-control bg-gray d-flex" id="uang_bayar" required>
                                 <label for="" class="pt-4">Kembalian : </label>
-                                <input type="text" name="uang_kembali" class="form-control bg-gray d-flex"
+                                <input type="text" name="uang_kembali" class="form-control mb-3 bg-gray d-flex"
                                     id="uang_kembali" required readonly>
                                 <center>
                                     <button type="submit" id="btnlunas" class="btn btn-success w-50">Bayar</button>

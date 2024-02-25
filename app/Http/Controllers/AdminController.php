@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\Log;
 use App\Models\Service;
 use App\Models\User;
@@ -20,12 +21,13 @@ class AdminController extends Controller
 
     function tambah() {
         $service = Service::all();
+        $kategori = Kategori::all();
 
-        return view('admin.tambah', compact('service'));
+        return view('admin.tambah', compact('service', 'kategori'));
     }
     function ubah(Service $service) {
-
-        return view('admin.ubah', compact('service'));
+        $kategori = Kategori::all();
+        return view('admin.ubah', compact('service', 'kategori'));
     }
     function postTambah(Request $request) {
         $request->validate([
@@ -35,6 +37,7 @@ class AdminController extends Controller
             'harga' => 'required',
             'status' => 'required',
             'harga_jasa' => 'required',
+            'kategori_id' => 'required'
         ]);
 
         $user = Auth::user();
@@ -57,6 +60,7 @@ class AdminController extends Controller
             'harga' => 'required',
             'status' => 'required',
             'harga_jasa' => 'required',
+            'kategori_id' => 'required'
         ]);
 
         $user = Auth::user();

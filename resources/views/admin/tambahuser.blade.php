@@ -4,7 +4,7 @@
     @include('template.sidebar')
     <div id="content">
         <div class="container col-md-6 mt-5">
-            <div class="card shadow p-2" style="background-color: #336B87;">
+            <div class="card shadow p-2" style="background-color: #EEEEEE;">
                 <div class="card-head text-center">
                     <h2>Tambah User</h2>
                 </div>

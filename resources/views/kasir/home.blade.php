@@ -11,30 +11,19 @@
             @endif
             <div class="row justify-content-center">
                 <div class="col-md-4">
-                    <a href="{{ route('dipesan') }}" class="card text-white bg-warning" style="text-decoration: none;">
+                    <a href="{{ route('dipesan') }}" class="card" heig style="background-color: #EEEEEE; text-decoration: none;">
                         <div class="card-body">
                             <h5 class="card-title">Transaksi Dipesan</h5>
-                            @if ($jmlhdipesan->isEmpty())
-                            <p>Jumlah Transaksi Dipesan: 0</p>
-                        @else
-                            @foreach ($jmlhdipesan as $transaksi)
-                                <p>Jumlah Transaksi Dipesan: {{ $transaksi->jumlah }}</p>
-                            @endforeach
-                        @endif
+                            <p>Transaksi Dipesan : {{$totaldipesan}}</p>
                         </div>
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="{{ route('summary') }}" class="card text-white bg-success" style="text-decoration: none;">
+                    <a href="{{ route('summary') }}" class="card" style="background-color: #00ADB5; text-decoration: none;">
                         <div class="card-body">
-                            <h5 class="card-title">Transaksi lunas</h5>
-                            @if ($jmlhlunas->isEmpty())
-                                <p>Jumlah Transaksi Lunas: 0</p>
-                            @else
-                                @foreach ($jmlhlunas as $transaksi)
-                                    <p>Jumlah Transaksi Lunas: {{ $transaksi->jumlah }}</p>
-                                @endforeach
-                            @endif
+                            <h5 class="card-title">Transaksi Lunas</h5>
+                            <p>Transaksi Lunas : {{$totallunas}}</p>
+
                         </div>
                     </a>
                 </div>

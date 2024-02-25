@@ -32,6 +32,13 @@
     
 <div>
     <div >
+        <center>
+            <h3>SERVICE PRO 1998</h3>
+        </center>
+        <hr>
+        <center>
+            <h5>LAPORAN PEMASUKAN</h5>
+        </center>
         <table>
             <thead>
                 <tr>
@@ -52,13 +59,13 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->nama }}</td>
                         <td>{{ $item->no_kendaraan }}</td>
-                        <td>{{ $item->total_harga }}</td>
+                        <td>Rp.{{ number_format($item->total_harga, '0',',','.') }}</td>
                         <td>{{ $item->created_at->format('d-m-Y') }}</td>
                     </tr>
                     @endforeach
                     <tr>
                         <td colspan="4">Total Pemasukan :</td>
-                        <td >{{$pemasukan}}</td>
+                        <td >Rp. {{number_format($pemasukan, '0',',','.')}}</td>
                     </tr>
             </tbody>
         </table>

@@ -4,7 +4,7 @@
     @include('template.sidebar')
     <div id="content">
         <div class="container col-md-6 mt-5">
-            <div class="card shadow p-2" style="background-color: #336B87;">
+            <div class="card shadow p-2" style="background-color: #EEEEEE;">
                 <div class="card-head text-center">
                     <h2>Tambah Service</h2>
                 </div>
@@ -33,6 +33,16 @@
                                 <option value="">Pilih Status</option>
                                 <option value="ada">Ada</option>
                                 <option value="habis">Habis</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="">Kategori</label>
+                            <select name="kategori_id" class="form-control" required id="">
+                                <option value="">Pilih Kategori</option>
+                                @foreach ($kategori as $item)
+                                <option value="{{$item->id}}">{{$item->nama}}</option>
+                                    
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group mb-3">

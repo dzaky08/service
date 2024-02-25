@@ -13,28 +13,33 @@ class OwnerController extends Controller
     function home() {
         $transaksis = Transaksi::where('status', 'lunas')->with('service')->get();
 
-        // Menyaring transaksi dengan 'no_kendaraan' dan 'created_at' yang sama
         $filteredTransactions = $transaksis->unique(function ($item) {
-            return $item->no_kendaraan . $item->created_at;
+            return $item->no_kendaraan . $item->updated_at;
         });
 
-        // Mengelompokkan transaksi berdasarkan 'no_kendaraan'
         $groupBy = $filteredTransactions->groupBy('no_kendaraan');
-
+        $groupByDate = $transaksis->groupBy(function ($item) {
+            return Carbon::parse($item->updated_at)->format('d-m-Y');
+        });
+    
         $tanggal = [];
         $pemasukan = [];
     
-        foreach ($transaksis as $transaksi) {
-            $tanggal[] = Carbon::parse($transaksi->updated_at)->format('d-m-Y');
+        foreach ($groupByDate as $date => $transactions) {
+            $totalPemasukanHariIni = 0;
     
-            // Hitung pemasukan per transaksi
-            $pemasukan[] = ($transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa);
+            foreach ($transactions as $transaksi) {
+                $totalPemasukanHariIni += ($transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa);
+            }
+    
+            $tanggal[] = $date;
+            $pemasukan[] = $totalPemasukanHariIni;
         }
 
+        array_multisort($tanggal, SORT_ASC, $pemasukan);
         $totalpemasukan = array_sum($pemasukan);
 
-        $chart = (new LarapexChart)->setType('area')
-            ->setTitle('Pemasukan')
+        $chart = (new LarapexChart)->setType('bar')
             ->setSubtitle('dari transaksi Hari Ini')
             ->setXAxis($tanggal)
             ->setDataset([
@@ -44,7 +49,7 @@ class OwnerController extends Controller
                 ]
             ]);
 
-        return view('owner.home', compact('chart', 'totalpemasukan', 'groupBy'));
+        return view('owner.home', compact('chart', 'totalpemasukan', 'groupBy', 'groupByDate'));
     }
 
     function filterowner(Request $request) {
@@ -64,24 +69,28 @@ class OwnerController extends Controller
 
         // Mengelompokkan transaksi berdasarkan 'no_kendaraan'
         $groupBy = $filteredTransactions->groupBy('no_kendaraan');
-
-
+        $groupByDate = $transaksis->groupBy(function ($item) {
+            return Carbon::parse($item->updated_at)->format('d-m-Y');
+        });
+    
         $tanggal = [];
         $pemasukan = [];
     
-        $transaksis = $transaksis->sortBy('updated_at');
-
-        foreach ($transaksis as $transaksi) {
-            $tanggal[] = Carbon::parse($transaksi->updated_at)->format('d-m-Y');
+        foreach ($groupByDate as $date => $transactions) {
+            $totalPemasukanHariIni = 0;
     
-            // Hitung pemasukan per transaksi
-            $pemasukan[] = ($transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa);
+            foreach ($transactions as $transaksi) {
+                $totalPemasukanHariIni += ($transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa);
+            }
+    
+            $tanggal[] = $date;
+            $pemasukan[] = $totalPemasukanHariIni;
         }
 
-        $totalpemasukan = $transaksis->sum($pemasukan);
+        array_multisort($tanggal, SORT_ASC, $pemasukan);
         // $totalpemasukan = array_sum($pemasukan);
-
-        $chart = (new LarapexChart)->setType('area')
+        
+        $chart = (new LarapexChart)->setType('bar')
         ->setTitle('Pemasukan')
         ->setSubtitle('dari transaksi Hari Ini')
         ->setXAxis($tanggal)
@@ -89,11 +98,12 @@ class OwnerController extends Controller
             [
                 'name' => 'pemasukan',
                 'data' => $pemasukan
-            ]
-        ]);
-
+                ]
+            ]);
+            
+            $totalpemasukan = array_sum($pemasukan);
     // Mengirimkan data ke view 'transaksi' bersama dengan total pemasukan
-        return view('owner.home', compact('chart', 'totalpemasukan', 'groupBy'));
+        return view('owner.home', compact('chart', 'totalpemasukan', 'groupBy', 'groupByDate'));
     }
 
 

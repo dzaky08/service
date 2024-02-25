@@ -4,12 +4,12 @@
     @include('template.sidebar')
     <div id="content">
         <div class="container col-md-6 mt-5">
-            <div class="card shadow p-2" style="background-color: #336B87;">
+            <div class="card shadow p-2" style="background-color: #EEEEEE;">
                 <div class="card-head text-center">
                     <h2>Ubah Service</h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('ubahuser', $service->id)}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('post-ubah', $service->id)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="">Foto</label>
@@ -33,6 +33,16 @@
                                 <option value="{{$service->status}}">{{$service->status}}</option>
                                 <option value="ada">Ada</option>
                                 <option value="habis">Habis</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="">Kategori</label>
+                            <select name="kategori_id" class="form-control" id="">
+                                <option value="{{$service->kategori_id}}">{{$service->kategori->nama}}</option>
+                                @foreach ($kategori as $item)
+                                <option value="{{$item->id}}">{{$item->nama}}</option>
+                                    
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group mb-3">

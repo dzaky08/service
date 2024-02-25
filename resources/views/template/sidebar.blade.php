@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <ul class="nav flex-column">
-        <img src="{{asset('img/logoservis.png')}}" alt="" class="w-100">
+        <img src="{{ asset('img/logoservis.png') }}" alt="" class="w-100">
         <li>
             <center>
                 <h4 style="color: white">SERVICE PRO</h4>
@@ -16,7 +16,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('home-montir') ? 'active' : '' }}"
-                    href="{{ route('keranjang') }}">Chart</a>
+                    href="{{ route('keranjang') }}">Cart</a>
             </li>
         @elseif(Auth::user()->role == 'kasir')
             <li class="nav-item">
@@ -59,14 +59,9 @@
         </li>
         <!-- Tambahkan link lainnya sesuai kebutuhan -->
     </ul>
+    <div class="footer text-white mt-3">
+        &copy; 2024 SERVICE PRO 1998 <br>
+        jln. dilan, Sukabumi JAWA BARAT 
+    </div>
 </div>
 <!-- End Sidebar -->
-
-
-
-
-
-
-
-
-

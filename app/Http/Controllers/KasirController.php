@@ -13,25 +13,9 @@ use Mpdf\Mpdf;
 class KasirController extends Controller
 {
     function home(){
-        // Dapatkan data transaksi yang dipesan
-        $dipesan = Transaksi::where('status', 'dipesan')->get();
-
-        // Dapatkan jumlah transaksi yang dipesan berdasarkan grup no_kendaraan
-        $jmlhdipesan = Transaksi::where('status', 'dipesan')
-            ->groupBy('no_kendaraan')
-            ->selectRaw('no_kendaraan, count(*) as jumlah')
-            ->get();
-
-        // Dapatkan data transaksi yang lunas
-        $lunas = Transaksi::where('status', 'lunas')->get();
-
-        // Dapatkan jumlah transaksi yang lunas berdasarkan grup no_kendaraan
-        $jmlhlunas = Transaksi::where('status', 'lunas')
-            ->groupBy('no_kendaraan')
-            ->selectRaw('no_kendaraan, count(*) as jumlah')
-            ->get();
-
-        return view('kasir.home', compact('dipesan', 'jmlhdipesan', 'lunas', 'jmlhlunas'));
+        $totaldipesan = Transaksi::where('status', 'dipesan')->count();
+        $totallunas = Transaksi::where('status', 'lunas')->count();
+        return view('kasir.home', compact('totaldipesan', 'totallunas'));
     }
     function dipesan(){
         $transaksi = Transaksi::where('status', 'dipesan')->get();

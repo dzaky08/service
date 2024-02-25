@@ -1,6 +1,6 @@
 @extends('template.html')
 
-@section('title', 'Home Montir')
+@section('title', 'Detail Service')
 
 @section('body')
     @include('template.sidebar')
@@ -47,11 +47,6 @@
                     <hr>
                 @endforeach
             </div>
-
-
         </div>
     </div>
-
-    </div>
-
 @endsection
