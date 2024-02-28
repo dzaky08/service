@@ -13,6 +13,7 @@
             border: 1px solid #ddd;
             padding: 50px;
         }
+
         table {
             width: 95%;
             border-collapse: collapse;
@@ -70,7 +71,9 @@
                     <p>No Kendaraan : {{ $data[0]->no_kendaraan }} </p>
                 </div>
                 <hr>
-                <h5>Service yang dilakukan :</h5>
+                <center>
+                    <h3>Service yang dilakukan :</h3>
+                </center>
                 <table class="table table-bordered">
                     <thead>
                         <tr>

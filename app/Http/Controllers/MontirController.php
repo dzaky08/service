@@ -26,10 +26,10 @@ class MontirController extends Controller
         $data = Service::where('kategori_id', $id)->with('kategori')->get();
 
         return view('montir.transaksi', compact('data'));
-    }
+    }  
 
     function detail(Request $request,Service $service) {
-        if ($service->status === 'habis' || $service->qty < 1) {
+        if ($service->status === 'habis' || $service->qty < 1 || $request->qty > $service->qty) {
             return back()->with('msg', 'Stock tidak tersedia.');
         }
     

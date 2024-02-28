@@ -28,11 +28,31 @@
 
                         </div>
                         <div class="card-body">
-                            @foreach ($data as $item)
-                                <p class="card-text">{{ $loop->iteration }} . {{ $item->service->nama }} :
-                                    {{ number_format($item->service->harga * $item->qty + $item->service->harga_jasa, '0', ',', '.') }}
-                                </p>
-                            @endforeach
+                            <table class="table table-bordered">
+                                <thead class="th">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Harga</th>
+                                        <th>Jumlah</th>
+                                        <th>Jasa</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $item)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->service->nama }}</td>
+                                            <td>{{ number_format($item->service->harga, '0', ',', '.') }}</td>
+                                            <td>{{ $item->qty }}</td>
+                                            <td>{{ number_format($item->service->harga_jasa, '0', ',', '.') }}</td>
+                                            <td>{{ number_format($item->service->harga * $item->qty + $item->service->harga_jasa, '0', ',', '.') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
