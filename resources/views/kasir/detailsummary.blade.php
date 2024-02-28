@@ -6,7 +6,7 @@
     @include('template.sidebar')
     <div id="content">
         <div class="container mt-5">
-            <div id="print-container" class="card col-6 mx-auto shadow p-4">
+            <div id="print-container" class="card col-8 mx-auto shadow p-4">
                 <div class="row">
                     <div class="card">
                         <div class="card-header">
@@ -30,11 +30,30 @@
                             </div>
                             <hr>
                             <h5 class="card-title">Service yang dilakukan :</h5>
-                            @foreach ($data as $item)
-                                <p class="card-text">{{ $loop->iteration }} . {{ $item->service->nama }} :
-                                    {{ $item->service->harga * $item->qty + $item->service->harga_jasa }}
-                                </p>
-                            @endforeach
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama</th>
+                                        <th>Harga</th>
+                                        <th>Jumlah</th>
+                                        <th>Jasa</th>
+                                        <th>Sub Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $item)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->service->nama }}</td>
+                                            <td>{{ number_format($item->service->harga, '0',',','.') }}</td>
+                                            <td>{{ $item->qty }}</td>
+                                            <td>{{ number_format($item->service->harga_jasa, '0',',','.') }}</td>
+                                            <td>{{ number_format($item->service->harga * $item->qty + $item->service->harga_jasa, '0', ',','.') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                             <hr>
                             <div class="pb-3">
                                 <label for="">Total Harga : </label>

@@ -8,12 +8,33 @@
     <title>pdf</title>
 
     <style>
-        #container{
-            width: 350px;
+        #container {
+            width: 400px;
             border: 1px solid #ddd;
             padding: 50px;
         }
-        .text-right{
+        table {
+            width: 95%;
+            border-collapse: collapse;
+            margin: 50px auto;
+        }
+
+
+        th {
+            background: #3D4452;
+            color: white;
+            font-weight: bold;
+        }
+
+        td,
+        th {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+            font-size: 18px;
+        }
+
+        .text-right {
             text-align: right;
         }
     </style>
@@ -26,10 +47,9 @@
                 <div class="">
                     <center>
                         <h2>SERVICE PRO 1998</h2>
-                        <div class="">
-                            @ SERVICE PRO 1998 <br>
-                            jln. DILAN no.04,
-                            SUKABUMI, JAWA BARAT 34141
+                        <div>
+                            <p>jln. Dilan no.04,
+                                SUKABUMI, JAWA BARAT 34141</p>
                         </div>
                         <div>
                             <p>Kode Transaksi : {{ $data[0]->kode }} </p>
@@ -51,11 +71,31 @@
                 </div>
                 <hr>
                 <h5>Service yang dilakukan :</h5>
-                @foreach ($data as $item)
-                    <p>{{ $loop->iteration }} . {{ $item->service->nama }} :
-                        {{ number_format($item->service->harga * $item->qty + $item->service->harga_jasa, '2',',','.') }}
-                    </p>
-                @endforeach
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Harga</th>
+                            <th>Jumlah</th>
+                            <th>Jasa</th>
+                            <th>Sub Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $item)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->service->nama }}</td>
+                                <td>{{ number_format($item->service->harga, '0', ',', '.') }}</td>
+                                <td>{{ $item->qty }}</td>
+                                <td>{{ number_format($item->service->harga_jasa, '0', ',', '.') }}</td>
+                                <td>{{ number_format($item->service->harga * $item->qty + $item->service->harga_jasa, '0', ',', '.') }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
                 <hr>
                 <div class="text-right">
                     <div>

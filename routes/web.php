@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Middleware\cekrole;
 use App\Http\Controllers\MontirController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
@@ -22,7 +23,7 @@ Route::post('/post-login', [AuthController::class,'postLogin'])->name('post-logi
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class,'logout'])->name('logout');
-    Route::prefix('montir')->group(function () {
+    Route::middleware(['auth', 'cekrole:montir'])->group(function () {
         Route::get('/home-montir', [MontirController::class,'home'])->name('home-montir');
         Route::get('/detailservice/{id}', [MontirController::class,'service'])->name('detailservice');
         Route::post('/pilih/{service}', [MontirController::class,'detail'])->name('pilih');
@@ -30,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/post-pesan', [MontirController::class,'postPesan'])->name('post-pesan');
         Route::get('/hapus', [MontirController::class,'hapus'])->name('hapus-keranjang');
     });
-    Route::prefix('kasir')->group(function () {
+    Route::middleware(['auth', 'cekrole:kasir'])->group(function () {
         Route::get('/home-kasir', [KasirController::class,'home'])->name('home-kasir');
         Route::get('/dipesan', [KasirController::class,'dipesan'])->name('dipesan');
         Route::get('/detail-kasir/{no_kendaraan}', [KasirController::class,'detailkasir'])->name('detail-kasir');
@@ -42,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pdf-sum', [KasirController::class,'pdfsum'])->name('pdf-sum');
     });
     
-    Route::prefix('admin')->group(function () {
+    Route::middleware(['auth', 'cekrole:admin'])->group(function () {
         Route::get('/dash-admin', [AdminController::class,'dash'])->name('dash-admin');
         Route::get('/log-admin', [AdminController::class,'log'])->name('log-admin');
         Route::get('/tambah', [AdminController::class,'tambah'])->name('tambah');
@@ -59,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/log/filter', [AdminController::class, 'filterlog'])->name('log-filter');
     });
     
-    Route::prefix('owner')->group(function () {
+    Route::middleware(['auth', 'cekrole:owner'])->group(function () {
         Route::get('/home-owner', [OwnerController::class,'home'])->name('home-owner');
         Route::get('/filterowner', [OwnerController::class,'filterowner'])->name('filterowner');
         Route::get('/logowner', [OwnerController::class,'logowner'])->name('logowner');

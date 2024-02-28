@@ -22,7 +22,7 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>php artisan service
+                    <tbody>
                         @foreach ($service as $item)
                             <tr>
                                 <td>{{ $loop->iteration}}</td>
@@ -30,9 +30,9 @@
                                 <td>
                                     <img src="{{ asset($item->foto) }}" alt="" width="100" height="100">
                                 </td>
-                                <td>{{ $item->harga }}</td>
+                                <td>{{ number_format($item->harga, '0',',','.') }}</td>
                                 <td>{{ $item->qty }}</td>
-                                <td>{{ $item->harga_jasa }}</td>
+                                <td>{{ number_format($item->harga_jasa, '0',',','.') }}</td>
                                 <td>{{ $item->kategori->nama}}</td>
                                 <td>
                                     <div class="form-group d-flex">

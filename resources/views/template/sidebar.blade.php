@@ -42,15 +42,14 @@
             </li>
         @else
             <li class="nav-item">
-                <a class="nav-link custom-nav-link {{ Request::is('owner/home-owner') ? 'active' : '' }}"
-                    href="{{ route('home-owner') }}">Beranda</a>
+                <a class="nav-link custom-nav-link" style="color: #FFFFFF" href="{{ route('home-owner') }}">Beranda</a>
             </li>
             {{-- <li class="nav-item">
                 <a class="nav-link custom-nav-link {{ Request::is('owner/sum-owner') ? 'active' : '' }}"
                     href="{{ route('sum-owner') }}">Report</a>
             </li> --}}
             <li class="nav-item">
-                <a class="nav-link custom-nav-link {{ Request::is('owner/logowner') || Request::is('owner/log/filter') ? 'active' : '' }}"
+                <a class="nav-link custom-nav-link" 
                     href="{{ route('logowner') }}" style="color: #FFFFFF">Log</a>
             </li>
         @endif

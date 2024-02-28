@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,7 @@
 
 
         th {
-            background: #00ADB5;
+            background: #3D4452;
             color: white;
             font-weight: bold;
         }
@@ -28,48 +29,56 @@
         }
     </style>
 </head>
+
 <body>
-    
-<div>
-    <div >
-        <center>
-            <h3>SERVICE PRO 1998</h3>
-        </center>
-        <hr>
-        <center>
-            <h5>LAPORAN PEMASUKAN</h5>
-        </center>
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>No Kendaraan</th>
-                    <th>Pemasukan</th>
-                    <th>Tanggal</th>
-                    {{-- <th>Tanggal</th> --}}
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($data as $noKendaraan => $group)
-                    @php
-                        $item = $group->first(); // Get the first transaction in the group
-                    @endphp
-                    <tr> 
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->nama }}</td>
-                        <td>{{ $item->no_kendaraan }}</td>
-                        <td>Rp.{{ number_format($item->total_harga, '0',',','.') }}</td>
-                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+
+    <div>
+        <div>
+            <div class="">
+                <center>
+                    <h2>SERVICE PRO 1998</h2>
+                    <div>
+                        <p>jln. Dilan no.04,
+                            SUKABUMI, JAWA BARAT 34141</p>
+                    </div>
+                </center>
+            </div>
+            <hr>
+            <center>
+                <h5>LAPORAN PEMASUKAN</h5>
+            </center>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>No Kendaraan</th>
+                        <th>Pemasukan</th>
+                        <th>Tanggal</th>
+                        {{-- <th>Tanggal</th> --}}
                     </tr>
+                </thead>
+                <tbody>
+                    @foreach ($data as $noKendaraan => $group)
+                        @php
+                            $item = $group->first(); // Get the first transaction in the group
+                        @endphp
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->nama }}</td>
+                            <td>{{ $item->no_kendaraan }}</td>
+                            <td>Rp.{{ number_format($item->total_harga, '0', ',', '.') }}</td>
+                            <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                        </tr>
                     @endforeach
                     <tr>
                         <td colspan="4">Total Pemasukan :</td>
-                        <td >Rp. {{number_format($pemasukan, '0',',','.')}}</td>
+                        <td>Rp. {{ number_format($pemasukan, '0', ',', '.') }}</td>
                     </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 </body>
+
 </html>
