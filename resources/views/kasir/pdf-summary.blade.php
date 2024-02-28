@@ -53,7 +53,7 @@
                 <h5>Service yang dilakukan :</h5>
                 @foreach ($data as $item)
                     <p>{{ $loop->iteration }} . {{ $item->service->nama }} :
-                        {{ $item->service->harga * $item->qty + $item->service->harga_jasa }}
+                        {{ number_format($item->service->harga * $item->qty + $item->service->harga_jasa, '2',',','.') }}
                     </p>
                 @endforeach
                 <hr>

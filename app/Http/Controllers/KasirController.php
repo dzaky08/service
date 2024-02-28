@@ -13,9 +13,14 @@ use Mpdf\Mpdf;
 class KasirController extends Controller
 {
     function home(){
-        $totaldipesan = Transaksi::where('status', 'dipesan')->count();
-        $totallunas = Transaksi::where('status', 'lunas')->count();
-        return view('kasir.home', compact('totaldipesan', 'totallunas'));
+        $totaldipesan = Transaksi::where('status', 'dipesan')->get();
+        $group = $totaldipesan->groupBy('no_kendaraan');
+        $countdipesan = $group->count();
+
+        $totallunas = Transaksi::where('status', 'lunas')->get(); 
+        $group = $totallunas->groupBy('no_kendaraan');
+        $countlunas = $group->count();
+        return view('kasir.home', compact('countdipesan', 'countlunas'));
     }
     function dipesan(){
         $transaksi = Transaksi::where('status', 'dipesan')->get();
@@ -79,7 +84,10 @@ class KasirController extends Controller
 
     public function summary()
     {
-        $transaksi = Transaksi::where('status', 'lunas')->with('service')->get();
+        $transaksi = Transaksi::where('status', 'lunas')
+        ->orderBy('updated_at')
+        ->with('service')
+        ->get();
         $pemasukan = $transaksi->sum(function ($transaksi) {
             return $transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa;
         });
@@ -118,7 +126,7 @@ class KasirController extends Controller
 
     // Mengelompokkan transaksi berdasarkan 'no_kendaraan'
         $groupBy = $filteredTransactions->groupBy('no_kendaraan');
-
+        
     // Mengirimkan data ke view 'transaksi' bersama dengan total pemasukan
         return view('kasir.summary', compact('groupBy', 'pemasukan'));
     }   

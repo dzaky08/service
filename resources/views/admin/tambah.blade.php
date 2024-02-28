@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Harga</label>
-                            <input type="number" name="harga" id="nama" class="form-control d-flex" required>
+                            <input type="number" name="harga" id="nama" min="1" class="form-control d-flex" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Status</label>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="">Harga Jasa</label>
-                            <input type="number" name="harga_jasa" id="nama" class="form-control d-flex" required>
+                            <input type="number" name="harga_jasa" id="nama" min="1" class="form-control d-flex" required>
                         </div>
                         <div class="row justify-content-center">
                             <button class="btn btn-primary w-50">Tambah</button>

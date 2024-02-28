@@ -38,7 +38,7 @@
                             @csrf
                             <div class="form-group mb-2 mt-3">
                                 <label for="">Jumlah :</label>
-                                <input type="number" class="form-control" name="qty" id="" required
+                                <input type="number" class="form-control" style="border: 1px solid #000000;" name="qty" id="" required
                                     min="1">
                             </div>
                             <button class="btn text-white w-100" style="background-color: #00ADB5">Pilih</button>

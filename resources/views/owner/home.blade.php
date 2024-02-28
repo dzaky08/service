@@ -41,7 +41,7 @@
                 <div class="row justify-content-center p-3">
                     <div class="card mx-3 p-3 col-4">
                         <h5 class="text-center">Filter</h5>
-                        <form action="{{ route('transaksi.filter') }}" method="GET">
+                        <form action="{{ route('filtersum') }}" method="GET">
                             @csrf
                             <input type="date" class="form-control mb-3" name="start_date">
                             <input type="date" class="form-control mb-3" name="end_date">

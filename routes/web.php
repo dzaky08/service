@@ -53,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dash-user', [AdminController::class,'user'])->name('dash-user');
         Route::get('/tambah-user', [AdminController::class,'tambahuser'])->name('tambah-user');
         Route::post('/post-user', [AdminController::class,'posttambahuser'])->name('post-user');
-        Route::delete('/delete/{user}', [AdminController::class,'hapususer'])->name('hapus-user');
+        Route::delete('/delete-user/{user}', [AdminController::class,'hapususer'])->name('hapus-user');
         Route::get('/edit/{user}', [AdminController::class,'ubahuser'])->name('edit');
         Route::post('/post-edit/{user}', [AdminController::class,'postubahuser'])->name('edit-user');
         Route::get('/log/filter', [AdminController::class, 'filterlog'])->name('log-filter');
@@ -66,5 +66,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/log/filter', [OwnerController::class, 'filterlog'])->name('filter-log');
         Route::get('/sum-owner', [OwnerController::class,'summary'])->name('sum-owner');
         Route::get('/report/filter', [OwnerController::class, 'filter'])->name('report-filter');
+        Route::get('/filter-sum', [OwnerController::class, 'filtersummary'])->name('filtersum');
     });
 });

@@ -11,7 +11,9 @@ use Illuminate\Http\Request;
 class OwnerController extends Controller
 {
     function home() {
-        $transaksis = Transaksi::where('status', 'lunas')->with('service')->get();
+        $transaksis = Transaksi::where('status', 'lunas')->with('service')
+        ->orderBy('updated_at')
+        ->get();
 
         $filteredTransactions = $transaksis->unique(function ($item) {
             return $item->no_kendaraan . $item->updated_at;
@@ -39,9 +41,73 @@ class OwnerController extends Controller
         array_multisort($tanggal, SORT_ASC, $pemasukan);
         $totalpemasukan = array_sum($pemasukan);
 
-        $chart = (new LarapexChart)->setType('bar')
+        $chart = (new LarapexChart)->setType('area')
             ->setSubtitle('dari transaksi Hari Ini')
             ->setXAxis($tanggal)
+            ->setColors([
+                '#ff0000'
+            ])
+            ->setDataset([
+                [
+                    'name' => 'pemasukan',
+                    'data' => $pemasukan
+                ]
+            ]);
+
+        return view('owner.home', compact('chart', 'totalpemasukan', 'groupBy', 'groupByDate'));
+    }
+    public function filtersummary(Request $request)
+    {
+        // Mendapatkan tanggal awal dan akhir dari request
+        $start_date = Carbon::parse($request->input('start_date'))->startOfDay();
+        $end_date = Carbon::parse($request->input('end_date'))->endOfDay();
+
+        // Menyaring transaksi berdasarkan rentang tanggal yang dipilih
+        $transaksis = Transaksi::whereBetween('updated_at', [$start_date, $end_date])
+                           ->where('status', 'lunas')
+                           ->with('service')
+                           ->orderBy('updated_at')
+                           ->get();
+
+        // Menghitung total pemasukan dari transaksi yang telah disaring
+        $pemasukan = $transaksis->sum(function ($transaksi) {
+             return $transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa;
+        });
+
+    // Menyaring transaksi dengan 'no_kendaraan' dan 'created_at' yang sama
+        $filteredTransactions = $transaksis->unique(function ($item) {
+            return $item->no_kendaraan . $item->update_at;
+        });
+
+    // Mengelompokkan transaksi berdasarkan 'no_kendaraan'
+        $groupBy = $filteredTransactions->groupBy('no_kendaraan');
+        $groupByDate = $transaksis->groupBy(function ($item) {
+            return Carbon::parse($item->updated_at)->format('d-m-Y');
+        });
+        
+        $tanggal = [];
+        $pemasukan = [];
+    
+        foreach ($groupByDate as $date => $transactions) {
+            $totalPemasukanHariIni = 0;
+    
+            foreach ($transactions as $transaksi) {
+                $totalPemasukanHariIni += ($transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa);
+            }
+    
+            $tanggal[] = $date;
+            $pemasukan[] = $totalPemasukanHariIni;
+        }
+
+        array_multisort($tanggal, SORT_ASC, $pemasukan);
+        $totalpemasukan = array_sum($pemasukan);
+
+        $chart = (new LarapexChart)->setType('area')
+            ->setSubtitle('dari transaksi Hari Ini')
+            ->setXAxis($tanggal)
+            ->setColors([
+                '#ff0000'
+            ])
             ->setDataset([
                 [
                     'name' => 'pemasukan',
@@ -72,7 +138,7 @@ class OwnerController extends Controller
         $groupByDate = $transaksis->groupBy(function ($item) {
             return Carbon::parse($item->updated_at)->format('d-m-Y');
         });
-    
+        
         $tanggal = [];
         $pemasukan = [];
     
@@ -90,8 +156,10 @@ class OwnerController extends Controller
         array_multisort($tanggal, SORT_ASC, $pemasukan);
         // $totalpemasukan = array_sum($pemasukan);
         
-        $chart = (new LarapexChart)->setType('bar')
-        ->setTitle('Pemasukan')
+        $chart = (new LarapexChart)->setType('area')
+        ->setColors([
+            '#ff0000'
+        ])
         ->setSubtitle('dari transaksi Hari Ini')
         ->setXAxis($tanggal)
         ->setDataset([
@@ -105,7 +173,6 @@ class OwnerController extends Controller
     // Mengirimkan data ke view 'transaksi' bersama dengan total pemasukan
         return view('owner.home', compact('chart', 'totalpemasukan', 'groupBy', 'groupByDate'));
     }
-
 
     function logowner() {
         $logs = Log::all();
@@ -125,7 +192,10 @@ class OwnerController extends Controller
     }
     public function summary()
     {
-        $transaksi = Transaksi::where('status', 'lunas')->with('service')->get();
+        $transaksi = Transaksi::where('status', 'lunas')
+        ->orderBy('updated_at')
+        ->with('service')
+        ->get();
         $pemasukan = $transaksi->sum(function ($transaksi) {
             return $transaksi->service->harga * $transaksi->qty + $transaksi->service->harga_jasa;
         });

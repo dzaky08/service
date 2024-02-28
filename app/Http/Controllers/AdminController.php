@@ -119,7 +119,7 @@ class AdminController extends Controller
             'role' => $request->role
         ]);
 
-        return redirect()->route('dash-user')->with('msg', "berhasil menambahkan User");
+        return redirect()->route('dash-user')->with('msg', "berhasil menambahkan Pengguna");
     }
     function postubahuser(Request $request, User $user) {
         $request->validate([
@@ -142,14 +142,13 @@ class AdminController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('dash-user')->with('msg', "berhasil mengubah Service");
+        return redirect()->route('dash-user')->with('msg', "berhasil mengubah Pengguna");
     }
 
     function hapususer(User $user) {
-        
         $user->delete();
 
-        return back()->with('msg', "berhasil menghapus user");
+        return redirect()->route('dash-user')->with('msg', "berhasil menghapus pengguna");
     }
 
     function log() {

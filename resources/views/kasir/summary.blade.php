@@ -1,6 +1,6 @@
 @extends('template.html')
 
-@section('title', 'Summary')
+@section('title', 'History Transaksi')
 
 @section('body')
     @include('template.sidebar')
@@ -11,7 +11,7 @@
             @endif
             <div class="card col-12 mx-auto p-4 shadow">
                 <div class="card-header" style="background-color: #3D4452">
-                    <h5 class="text-center text-white">Transaksi</h5>
+                    <h5 class="text-center text-white">History Transaksi</h5>
 
                 </div>
                 <div class="row justify-content-center p-3">
@@ -50,16 +50,17 @@
                     <tbody>
                         @foreach ($groupBy as $noKendaraan => $group)
                             @php
-                                $firstTransaction = $group->first(); // Get the first transaction in the group
+                                $first = $group->first(); // Get the first  in the group
+                                $count = $first->count();    
                             @endphp
                             <tr> 
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $firstTransaction->nama }}</td>
-                                <td>{{ $firstTransaction->no_kendaraan }}</td>
-                                <td>{{ number_format($firstTransaction->total_harga, '0',',','.') }}</td>
-                                <td>{{ $firstTransaction->created_at->format('d-m-Y') }}</td>
+                                <td>{{ $first->nama }}</td>
+                                <td>{{ $first->no_kendaraan }}</td>
+                                <td>{{ number_format($first->total_harga, '0',',','.') }}</td>
+                                <td>{{ $first->created_at->format('d-m-Y') }}</td>
                                 <td>
-                                    <a href="{{ route('detail-summary', ['no_kendaraan' => $firstTransaction->no_kendaraan]) }}"
+                                    <a href="{{ route('detail-summary', ['no_kendaraan' => $first->no_kendaraan]) }}"
                                         class="btn text-white form-control" style="background-color: #336B87">detail</a>
                                 </td>
                             </tr>

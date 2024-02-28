@@ -11,7 +11,7 @@
             @endif
             <div class="card col-8 mx-auto p-4"style="background-color: #EEEEEE">
                 <div class="card-header" style="background-color: #3D4452">
-                    <h5 class="text-center text-light">Booking Service</h5>
+                    <h5 class="text-center text-light">Transaksi</h5>
                 </div>
                 <table id="example" class="table table-bordered" style="background-color: #EEEEEE">
                     <thead>

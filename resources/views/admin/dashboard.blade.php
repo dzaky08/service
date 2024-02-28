@@ -18,13 +18,14 @@
                             <th>Harga</th>
                             <th>Stok</th>
                             <th>Harga Jasa</th>
+                            <th>Kategori</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody>php artisan service
                         @foreach ($service as $item)
                             <tr>
-                                <td>{{ $item->id }}</td>
+                                <td>{{ $loop->iteration}}</td>
                                 <td>{{ $item->nama }}</td>
                                 <td>
                                     <img src="{{ asset($item->foto) }}" alt="" width="100" height="100">
@@ -32,10 +33,11 @@
                                 <td>{{ $item->harga }}</td>
                                 <td>{{ $item->qty }}</td>
                                 <td>{{ $item->harga_jasa }}</td>
+                                <td>{{ $item->kategori->nama}}</td>
                                 <td>
                                     <div class="form-group d-flex">
                                         <a href="{{ route('ubah', $item->id) }}"
-                                            class="btn btn-warning m-2">Edit</a>
+                                            class="btn btn-warning m-2">Ubah</a>
                                         <form action="{{ route('hapus-admin', $item->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')

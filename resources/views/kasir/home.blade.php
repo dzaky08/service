@@ -14,7 +14,15 @@
                     <a href="{{ route('dipesan') }}" class="card" heig style="background-color: #EEEEEE; text-decoration: none;">
                         <div class="card-body">
                             <h5 class="card-title">Transaksi Dipesan</h5>
-                            <p>Transaksi Dipesan : {{$totaldipesan}}</p>
+                            <p style="color: red;">
+                                Transaksi dipesan : {{$countdipesan}}
+                                {{-- @if ($totaldipesan > 0)
+                                    Ada Pesanan!
+                                @else
+                                    Tidak Ada Pesanan!
+                                @endif --}}
+
+                            </p>
                         </div>
                     </a>
                 </div>
@@ -22,7 +30,7 @@
                     <a href="{{ route('summary') }}" class="card" style="background-color: #00ADB5; text-decoration: none;">
                         <div class="card-body">
                             <h5 class="card-title">Transaksi Lunas</h5>
-                            <p>Transaksi Lunas : {{$totallunas}}</p>
+                            <p>Transaksi Lunas : {{$countlunas}}</p>
 
                         </div>
                     </a>

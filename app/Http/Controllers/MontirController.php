@@ -14,7 +14,12 @@ class MontirController extends Controller
 {
     function home() {
         $data = Kategori::all();
-        return view('montir.homemontir', compact('data'));
+        $alas = 3;
+        $tinggi = 7;
+        $luas = 1/2 * $alas * $tinggi;
+
+
+        return view('montir.homemontir', compact('data', 'luas'));
     }
 
     function service($id) {
@@ -48,7 +53,7 @@ class MontirController extends Controller
     }
 
     function keranjang(Transaksi $transaksi){
-        $data = Transaksi::where('status', 'keranjang')->with('service')->get();
+        $data = Transaksi::where(['user_id' => auth()->id(),'status' => 'keranjang'])->with('service')->get();
         $totalsemua = 0;
 
         // Loop melalui setiap transaksi

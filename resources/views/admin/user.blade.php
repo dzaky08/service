@@ -32,7 +32,7 @@
                             <td>{{ $item->role }}</td>
                             <td>
                                 <div class="form-group d-flex">
-                                    <a href="{{route('edit', $item->id)}}" class="btn btn-success m-2">Edit</a>
+                                    <a href="{{route('edit', $item->id)}}" class="btn btn-warning m-2">Ubah</a>
                                     <form action="{{ route('hapus-user', $item->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')

@@ -4,7 +4,7 @@
     left: 0;
     height: 100%;
     width: 250px;
-    background-color: #3D4452;
+    /* background-color: #3D4452; */
     padding: 20px;
 }
 .footer {
@@ -30,6 +30,9 @@
     position: relative;
 }
 
+.custom-nav-link{
+    color: #ffffff;
+}
 .sidebar .nav-link::after {
     content: '';
     position: absolute;
@@ -43,7 +46,10 @@
 }
 
 .sidebar .nav-link:hover::after {
-    transform: scaleX(1); /* Memperluas garis bawah saat mouse hover */
+    transform: scaleX(1);
+    background-color: #ffffff; /* Atur warna garis bawah sesuai keinginan Anda *//* Atur warna garis bawah sesuai keinginan Anda */
+    
+    /* Memperluas garis bawah saat mouse hover */
 }
 .sidebar .nav-link.active::after {
     content: '';

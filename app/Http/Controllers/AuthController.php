@@ -9,7 +9,11 @@ use App\Models\Log;
 class AuthController extends Controller
 {
     function Login() {
-        return view('welcome');
+        if (Auth::check()) {
+            return redirect()->back();
+        }else{
+            return view('welcome');
+        }
     }
 
     function postLogin(Request $request) {
@@ -27,13 +31,13 @@ class AuthController extends Controller
                 'user_id' => $user->id
             ]);
             if ($user->role == 'montir') {
-                return redirect()->route('home-montir')->with('msg', 'Selamat Datang di Home', $user->nama);
+                return redirect()->route('home-montir')->with('msg', 'Selamat Datang di Beranda', $user->nama);
             }elseif ($user->role == 'kasir') {
-                return redirect()->route('home-kasir')->with('msg', 'Selamat Datang di Home', $user->nama);
+                return redirect()->route('home-kasir')->with('msg', 'Selamat Datang di Beranda', $user->nama);
             }elseif ($user->role == 'admin') {
                 return redirect()->route('dash-admin')->with('msg', 'Selamat Datang di dashboard', $user->nama);
             }else{
-                return redirect()->route('home-owner')->with('msg', 'Selamat Datang di Home', $user->nama);
+                return redirect()->route('home-owner')->with('msg', 'Selamat Datang di Beranda', $user->nama);
             }
         }else {
             return redirect()->back()->with('msg', 'Username atau Password Salah!');
